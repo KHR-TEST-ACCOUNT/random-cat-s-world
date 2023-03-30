@@ -19,9 +19,23 @@ const IndexPage: NextPage = () => {
         });
     }, []);
 
+    // ボタンをクリックしたときに画像が更新する非同期関数
+    const handleClick = async () => {
+        setLoading(true);
+        const newImage = await fetchImage();
+        setImageUrl(newImage.url);
+        setLoading(false);
+    };
+
+    return (
+        <div>
+            <button onClick={handleClick}>他の猫も見る</button>
+            <div>{loading || <img src={imageUrl} />}</div>
+        </div>
+    );
     // ローディング中でなければ、画像を表示する
     // JSXの式には、IFなどの文が使えないので、論理演算や三項演算子を使う
-    return <div>{loading || <img src={imageUrl} />}</div>;
+    // return <div>{loading || <img src={imageUrl} />}</div>;
     // or  {loading ? "読み込み中" : <img src="..." />} など
 };
 
